@@ -6,20 +6,19 @@
 
 class Planner
 {
-public:
-    Planner() : dataWriter(events), dataReader(events)
-    {
-    }
+    // public:
+    //   Planner() : dataWriter(events), dataReader(events)
+    //   {
+    //   }
 
-    void addEvents(const Event& event)
-    {
-        dataWriter.write();
-    }
+    //   void addEvents(const Event &event)
+    //   {
+    //       dataWriter.write();
+    //   }
 
+    // private:
+    //   DataWriter dataWriter;
+    //   DataReader dataReader;
 
-private:
-    DataWriter dataWriter;
-    DataReader dataReader;
-    
-    std::vector<Event> events;
+    //   std::vector<Event> events;
 };

@@ -14,6 +14,7 @@ add_executable(planner
     ../main.cpp
     ~/MyPlanner/code/source/Planner.cpp
     ~/MyPlanner/code/source/DbCreator.cpp
+    ~/MyPlanner/code/source/DataReader.cpp
     )
 
 link_directories(/usr/lib)

@@ -1,24 +1,23 @@
 #pragma once
 #include <vector>
-#include "Event.hpp"
+#include <string>
+#include <sqlite3.h>
 
 class DataReader
 {
 public:
-    DataReader(std::vector<Event>& events)
-    : events(events)
-    {
-    }
+  DataReader(sqlite3 *db) : db(db)
+  {
+  }
 
-    static int callback(void *NotUsed, int argc, char **argv, char **azColName) 
-    {
-        for(auto i = 0; i<argc; i++)
-        {
-            printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-        }
-        printf("\n");
-    return 0;
-}
+  const std::vector<std::string> &getMyEvents()
+  {
+    return myEvents;
+  }
+
+  void takeDataFromDatabase();
+
 private:
-    std::vector<Event>& events;
+  sqlite3 *db;
+  std::vector<std::string> myEvents{};
 };

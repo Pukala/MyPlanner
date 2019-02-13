@@ -5,17 +5,16 @@
 
 class DataWriter
 {
-public:
-    DataWriter(std::vector<Event>& events)
-    : events(events)
-    {
-    }
+  // public:
+  //   DataWriter(std::vector<Event> &events)
+  //       : events(events)
+  //   {
+  //   }
 
-    void write()
-    {
-        
+  //   void write()
+  //   {
+  //   }
 
-    }
-private:
-    std::vector<Event>& events;
+  // private:
+  //   std::vector<Event> &events;
 };
