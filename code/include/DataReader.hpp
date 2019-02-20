@@ -8,6 +8,7 @@ class DataReader
 public:
   DataReader(sqlite3 *db) : db(db)
   {
+    myEvents.reserve(10);
   }
 
   const std::vector<std::string> &getMyEvents()

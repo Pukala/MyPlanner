@@ -1,24 +1,39 @@
 #pragma once
 #include <vector>
-#include "Event.hpp"
 #include "DataWriter.hpp"
 #include "DataReader.hpp"
 
+#include <iostream>
+
 class Planner
 {
-    // public:
-    //   Planner() : dataWriter(events), dataReader(events)
-    //   {
-    //   }
+  public:
+    Planner(sqlite3 *db) : dataWriter(db), dataReader(db)
+    {
+    }
 
-    //   void addEvents(const Event &event)
-    //   {
-    //       dataWriter.write();
-    //   }
+    void createTable(const std::string &name)
+    {
 
-    // private:
-    //   DataWriter dataWriter;
-    //   DataReader dataReader;
+        dataWriter.createTable(name);
+    }
 
-    //   std::vector<Event> events;
+    void insertData(const Event &event)
+    {
+        dataWriter.insertData(event);
+    }
+
+    const auto &getMyEvents()
+    {
+        return dataReader.getMyEvents();
+    }
+
+    void updateData()
+    {
+        dataReader.takeDataFromDatabase();
+    }
+
+  private:
+    DataWriter dataWriter;
+    DataReader dataReader;
 };

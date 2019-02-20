@@ -7,6 +7,7 @@ std::vector<std::string> events{};
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
+    events.reserve(10);
     for (auto i = 0; i < argc; i++)
     {
         if (argv[i])

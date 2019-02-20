@@ -1,20 +1,23 @@
 #pragma once
-#include <vector>
-#include <iostream>
 #include "Event.hpp"
+#include <sqlite3.h>
+#include <string>
 
 class DataWriter
 {
-  // public:
-  //   DataWriter(std::vector<Event> &events)
-  //       : events(events)
-  //   {
-  //   }
+public:
+  DataWriter(sqlite3 *db) : db(db)
+  {
+  }
 
-  //   void write()
-  //   {
-  //   }
+  void createTable(const std::string &nameOfTable_);
+  void insertData(const Event &event);
 
-  // private:
-  //   std::vector<Event> &events;
+private:
+  void checkResult(const std::string &name);
+
+  sqlite3 *db;
+  char *zErrMsg{nullptr};
+  std::string sqlCommand{};
+  std::string nameOfTable{};
 };
