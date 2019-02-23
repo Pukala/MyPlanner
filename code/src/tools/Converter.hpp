@@ -1,14 +1,14 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "Event.hpp"
-#include <iostream>
 #include <cassert>
+
+#include "Event.hpp"
 
 namespace Converter
 {
 
-std::vector<Event> convert(const std::vector<std::string> &params)
+std::vector<Event> convert(std::vector<std::string> &params)
 {
     if (params.size() == 0)
     {
@@ -30,6 +30,7 @@ std::vector<Event> convert(const std::vector<std::string> &params)
         convertedParams.push_back(event);
     }
     convertedParams.shrink_to_fit();
+    params = std::vector<std::string>{};
     return convertedParams;
 }
 

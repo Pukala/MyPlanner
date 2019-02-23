@@ -8,3 +8,10 @@ std::ostream &operator<<(std::ostream &os, const Event &obj)
 
     return os;
 }
+
+bool operator==(const Event &lhs, const Event &rhs)
+{
+    return lhs.id == rhs.id and
+           lhs.nameOfAction == rhs.nameOfAction and
+           lhs.description == rhs.description;
+}

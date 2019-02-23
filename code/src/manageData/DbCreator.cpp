@@ -1,7 +1,7 @@
 #include <iostream>
 #include <experimental/filesystem>
-#include <cstdlib>
 #include <cassert>
+
 #include "DbCreator.hpp"
 
 DbCreator::DbCreator(const std::string &nameOfDatabase) : nameOfDatabase(nameOfDatabase + ".db")
@@ -19,7 +19,7 @@ DbCreator::DbCreator(const std::string &nameOfDatabase) : nameOfDatabase(nameOfD
 DbCreator::~DbCreator()
 {
     std::cout << "I have closed Database\n";
-    sqlite3_close(db);
+    sqlite3_close(dbInfo.db);
     sqlite3_free(zErrMsg);
 }
 
@@ -30,7 +30,7 @@ bool DbCreator::isDatabaseExist() const
 
 bool DbCreator::isOpenedSuccessfully()
 {
-    return (not sqlite3_open(nameOfDatabase.c_str(), &db));
+    return (not sqlite3_open(nameOfDatabase.c_str(), &dbInfo.db));
 }
 
 void DbCreator::openTheExistingDatabase()
@@ -38,6 +38,7 @@ void DbCreator::openTheExistingDatabase()
     if (isOpenedSuccessfully())
     {
         std::cout << "I have opened existing Database\n";
+        dbInfo.isOpenedExistDb = true;
     }
     else
     {

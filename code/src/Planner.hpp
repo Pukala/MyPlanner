@@ -1,23 +1,34 @@
 #pragma once
 #include <vector>
-#include "../manageData/DataWriter.hpp"
-#include "../manageData/DataReader.hpp"
+
+#include "manageData/DataWriter.hpp"
+#include "manageData/DataReader.hpp"
+#include "manageData/DbInfo.hpp"
 
 class Planner
 {
 public:
-  Planner(sqlite3 *db) : dataWriter(db), dataReader(db)
+  Planner(DbInfo &dbInfo) : dbInfo(dbInfo), dataWriter(dbInfo), dataReader(dbInfo.db)
   {
+    if (dbInfo.isOpenedExistDb)
+    {
+      lastElementId = dataReader.getDataFromDatabase().size();
+    }
   }
 
-  void createTable(const std::string &name)
+  void createTable()
   {
-    dataWriter.createTable(name);
+    dataWriter.createTable();
   }
 
   void insertData(Event event)
   {
-    dataWriter.insertData(event);
+    dataWriter.insertData(event, lastElementId);
+  }
+
+  Event takeElementById(const int id)
+  {
+    return dataReader.takeElementById(id);
   }
 
   const std::vector<Event> getDataFromDatabase()
@@ -28,4 +39,6 @@ public:
 private:
   DataWriter dataWriter;
   DataReader dataReader;
+  DbInfo dbInfo{};
+  uint16_t lastElementId{};
 };

@@ -5,9 +5,9 @@
 class Event
 {
 public:
-  Event(const int id,
-        const std::string &nameOfAction,
-        const std::string &description) : id(id), nameOfAction(nameOfAction), description(description)
+  Event(
+      const std::string &nameOfAction,
+      const std::string &description) : nameOfAction(nameOfAction), description(description)
   {
   }
 
@@ -32,6 +32,7 @@ public:
   }
 
   friend std::ostream &operator<<(std::ostream &os, const Event &obj);
+  friend bool operator==(const Event &lhs, const Event &rhs);
 
 private:
   int id;

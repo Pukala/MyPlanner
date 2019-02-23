@@ -1,20 +1,21 @@
 #pragma once
 #include "Event.hpp"
 #include "DbParameters.hpp"
+#include "DbInfo.hpp"
 
 class DataWriter
 {
 public:
-  DataWriter(sqlite3 *db) : dbParameters(db)
+  DataWriter(DbInfo &dbInfo) : dbParameters(dbInfo.db), dbInfo(dbInfo)
   {
   }
 
-  void createTable(const std::string &nameOfTable_);
-  void insertData(const Event &event);
+  void createTable();
+  void insertData(const Event &event, uint16_t &lastElementId);
 
 private:
-  void checkResult(const std::string &name);
+  void checkResult();
 
   DbParameters dbParameters{};
-  std::string nameOfTable{};
+  DbInfo dbInfo{};
 };

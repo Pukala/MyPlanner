@@ -2,13 +2,15 @@
 #include <string>
 #include <sqlite3.h>
 
+#include "DbInfo.hpp"
+
 class DbCreator
 {
 public:
   DbCreator(const std::string &nameOfDatabase);
   ~DbCreator();
 
-  sqlite3 *getSqlite3() { return db; }
+  DbInfo &getdbInfoemation() { return dbInfo; }
 
 private:
   bool isDatabaseExist() const;
@@ -20,7 +22,6 @@ private:
   void checkResult(const std::string &name);
 
   std::string nameOfDatabase{};
-
-  sqlite3 *db;
+  DbInfo dbInfo{};
   char *zErrMsg{nullptr};
 };

@@ -1,7 +1,8 @@
-#include "DataWriter.hpp"
 #include <sstream>
 #include <iostream>
 #include <cassert>
+
+#include "DataWriter.hpp"
 
 namespace
 {
@@ -21,32 +22,36 @@ std::string toStr(T tmp)
 
 } // namespace
 
-void DataWriter::createTable(const std::string &nameOfTable_)
+void DataWriter::createTable()
 {
-    nameOfTable = nameOfTable_;
+    if (dbInfo.isOpenedExistDb)
+    {
+        return;
+    }
     // clang-format off
-    dbParameters.sqlCommand = "CREATE TABLE " + nameOfTable + "("  \
+    
+    dbParameters.sqlCommand = "CREATE TABLE TODO("  \
                  "ID INT           PRIMARY KEY     NOT NULL," \
                  "NAME             TEXT            NOT NULL," \
                  "DESCRIPTION      TEXT);";
     // clang-format on
-    checkResult(std::string{"Table created"});
+    checkResult();
 }
 
-void DataWriter::insertData(const Event &event)
+void DataWriter::insertData(const Event &event, uint16_t &lastElementId)
 {
     // clang-format off
     dbParameters.sqlCommand = 
-                 "INSERT INTO " + nameOfTable + 
-                 "(ID,NAME,DESCRIPTION) " \
-                 "VALUES (" + toStr(event.getId()) + ", '"
+                 "INSERT INTO TODO(ID,NAME,DESCRIPTION) " \
+                 "VALUES (" + toStr(lastElementId++) + ", '"
                             + event.getNameOfAction() + "', '"
                             + event.getDescription() + "'); ";
     // clang-format on
-    checkResult(std::string{"Data inserted"});
+
+    checkResult();
 }
 
-void DataWriter::checkResult(const std::string &name)
+void DataWriter::checkResult()
 {
     const auto rc = sqlite3_exec(dbParameters.db, dbParameters.sqlCommand.c_str(),
                                  notUsedParametr, 0, &dbParameters.zErrMsg);
@@ -56,9 +61,5 @@ void DataWriter::checkResult(const std::string &name)
         sqlite3_free(dbParameters.zErrMsg);
         std::cerr << "SQL error: " << dbParameters.zErrMsg << "\n";
         assert(false);
-    }
-    else
-    {
-        std::cout << name << " successfully\n";
     }
 }
