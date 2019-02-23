@@ -1,6 +1,7 @@
-#include "../include/DataWriter.hpp"
+#include "DataWriter.hpp"
 #include <sstream>
 #include <iostream>
+#include <cassert>
 
 namespace
 {
@@ -24,7 +25,7 @@ void DataWriter::createTable(const std::string &nameOfTable_)
 {
     nameOfTable = nameOfTable_;
     // clang-format off
-    sqlCommand = "CREATE TABLE " + nameOfTable + "("  \
+    dbParameters.sqlCommand = "CREATE TABLE " + nameOfTable + "("  \
                  "ID INT           PRIMARY KEY     NOT NULL," \
                  "NAME             TEXT            NOT NULL," \
                  "DESCRIPTION      TEXT);";
@@ -35,7 +36,7 @@ void DataWriter::createTable(const std::string &nameOfTable_)
 void DataWriter::insertData(const Event &event)
 {
     // clang-format off
-    sqlCommand = 
+    dbParameters.sqlCommand = 
                  "INSERT INTO " + nameOfTable + 
                  "(ID,NAME,DESCRIPTION) " \
                  "VALUES (" + toStr(event.getId()) + ", '"
@@ -47,12 +48,14 @@ void DataWriter::insertData(const Event &event)
 
 void DataWriter::checkResult(const std::string &name)
 {
-    const auto rc = sqlite3_exec(db, sqlCommand.c_str(), notUsedParametr, 0, &zErrMsg);
+    const auto rc = sqlite3_exec(dbParameters.db, dbParameters.sqlCommand.c_str(),
+                                 notUsedParametr, 0, &dbParameters.zErrMsg);
 
     if (rc != SQLITE_OK)
     {
-        std::cerr << "SQL error: " << zErrMsg << "\n";
-        sqlite3_free(zErrMsg);
+        sqlite3_free(dbParameters.zErrMsg);
+        std::cerr << "SQL error: " << dbParameters.zErrMsg << "\n";
+        assert(false);
     }
     else
     {

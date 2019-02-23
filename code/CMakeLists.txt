@@ -5,17 +5,20 @@ project (planner)
 
 include_directories(
     /usr/include
-    ~/MyPlanner/code/include
+    ~/MyPlanner/code/src
+    ~/MyPlanner/code/src/manageData
+    ~/MyPlanner/code/src/tools
     )
 
 link_libraries(stdc++fs) #Turn on filesystem
 
 add_executable(planner 
     ../main.cpp
-    ~/MyPlanner/code/source/Planner.cpp
-    ~/MyPlanner/code/source/DbCreator.cpp
-    ~/MyPlanner/code/source/DataReader.cpp
-    ~/MyPlanner/code/source/DataWriter.cpp
+    ~/MyPlanner/code/src/Planner.cpp
+    ~/MyPlanner/code/src/manageData/DbCreator.cpp
+    ~/MyPlanner/code/src/manageData/DataReader.cpp
+    ~/MyPlanner/code/src/manageData/DataWriter.cpp
+    ~/MyPlanner/code/src/tools/Event.cpp
     )
 
 link_directories(/usr/lib)

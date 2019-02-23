@@ -1,12 +1,11 @@
 #pragma once
 #include "Event.hpp"
-#include <sqlite3.h>
-#include <string>
+#include "DbParameters.hpp"
 
 class DataWriter
 {
 public:
-  DataWriter(sqlite3 *db) : db(db)
+  DataWriter(sqlite3 *db) : dbParameters(db)
   {
   }
 
@@ -16,8 +15,6 @@ public:
 private:
   void checkResult(const std::string &name);
 
-  sqlite3 *db;
-  char *zErrMsg{nullptr};
-  std::string sqlCommand{};
+  DbParameters dbParameters{};
   std::string nameOfTable{};
 };

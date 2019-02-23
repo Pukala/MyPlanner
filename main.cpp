@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "code/include/DbCreator.hpp"
-#include "code/include/DataReader.hpp"
-#include "code/include/DataWriter.hpp"
-#include "code/include/Planner.hpp"
+#include "code/src/manageData/DbCreator.hpp"
+#include "code/src/Planner.hpp"
 
 int main()
 {
@@ -14,14 +12,14 @@ int main()
 
     planner.createTable(std::string{"TODO"});
 
-    Event firstTask{1, "Sprzatanie2", "Posprzatac mieszkanie"};
-    Event secondTask{2, "Sprzatanie", "Posprzatac mieszkanie"};
+    for (auto i = 0; i < 6; i++)
+    {
+        planner.insertData(Event(i, "Sprzatanie2", "Posprzatac mieszkanie"));
+    }
 
-    planner.insertData(firstTask);
-    planner.insertData(secondTask);
-    planner.updateData();
+    //planner.updateData();
 
-    for (auto i : planner.getMyEvents())
+    for (auto i : planner.getDataFromDatabase())
     {
         std::cout << i << std::endl;
     }

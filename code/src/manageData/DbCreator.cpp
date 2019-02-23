@@ -1,8 +1,8 @@
 #include <iostream>
 #include <experimental/filesystem>
 #include <cstdlib>
-
-#include "../include/DbCreator.hpp"
+#include <cassert>
+#include "DbCreator.hpp"
 
 DbCreator::DbCreator(const std::string &nameOfDatabase) : nameOfDatabase(nameOfDatabase + ".db")
 {
@@ -42,7 +42,7 @@ void DbCreator::openTheExistingDatabase()
     else
     {
         std::cerr << "Can not open Database\n";
-        exit(0);
+        assert(false);
     }
 }
 
@@ -55,6 +55,6 @@ void DbCreator::createNewDatabase()
     else
     {
         std::cerr << "Can not create new Database\n";
-        exit(0);
+        assert(false);
     }
 }
