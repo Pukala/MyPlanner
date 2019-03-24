@@ -34,7 +34,6 @@ public:
   friend std::ostream &operator<<(std::ostream &os, const Event &obj);
   friend bool operator==(const Event &lhs, const Event &rhs);
 
-private:
   int id;
   std::string nameOfAction;
   std::string description;

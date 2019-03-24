@@ -17,5 +17,5 @@ private:
   void checkResult();
 
   DbParameters dbParameters{};
-  DbInfo dbInfo{};
+  DbInfo &dbInfo;
 };

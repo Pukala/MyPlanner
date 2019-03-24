@@ -8,9 +8,9 @@
 class Planner
 {
 public:
-  Planner(DbInfo &dbInfo) : dbInfo(dbInfo), dataWriter(dbInfo), dataReader(dbInfo.db)
+  Planner(DbInfo &dbInfo) : dataWriter(dbInfo), dataReader(dbInfo.db), dbInfo(dbInfo)
   {
-    if (dbInfo.isOpenedExistDb)
+    if (dbInfo.isOpenedExistDb and dbInfo.isEmpty == false)
     {
       lastElementId = dataReader.getDataFromDatabase().size();
     }
@@ -35,6 +35,8 @@ public:
   {
     return dataReader.getDataFromDatabase();
   }
+
+  void menu();
 
 private:
   DataWriter dataWriter;

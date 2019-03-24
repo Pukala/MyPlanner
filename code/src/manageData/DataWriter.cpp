@@ -24,17 +24,17 @@ std::string toStr(T tmp)
 
 void DataWriter::createTable()
 {
-    if (dbInfo.isOpenedExistDb)
+    if (dbInfo.isOpenedExistDb and dbInfo.isCreatedTable)
     {
         return;
     }
     // clang-format off
-    
     dbParameters.sqlCommand = "CREATE TABLE TODO("  \
                  "ID INT           PRIMARY KEY     NOT NULL," \
                  "NAME             TEXT            NOT NULL," \
                  "DESCRIPTION      TEXT);";
     // clang-format on
+    dbInfo.isCreatedTable = true;
     checkResult();
 }
 
@@ -47,7 +47,7 @@ void DataWriter::insertData(const Event &event, uint16_t &lastElementId)
                             + event.getNameOfAction() + "', '"
                             + event.getDescription() + "'); ";
     // clang-format on
-
+    dbInfo.isEmpty = false;
     checkResult();
 }
 
